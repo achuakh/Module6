@@ -3,11 +3,10 @@ import os
 
 # === Third-Party Packages ===
 from flask import Flask, request
-from dotenv import load_dotenv
 import requests
 import joblib
 
-# for local test
+# for local test, can remove for deployment
 from dotenv import load_dotenv
 # Load environment variables from .env file
 load_dotenv()
@@ -17,7 +16,7 @@ load_dotenv()
 
 TELEGRAM_TOKEN = os.getenv('TELEGRAM_TOKEN')
 url = f'https://api.telegram.org/bot{TELEGRAM_TOKEN}/'
-WEBHOOK_URL = os.getenv('WEBHOOK_URL')
+WEBHOOK_URL = os.getenv('domain_url')
 
 # === prepare classifier ===
 encoder = joblib.load("cv_encoder.pkl")  # Load the encoder
@@ -54,7 +53,7 @@ with app.app_context():
 
 @app.route('/', methods=['GET'])
 def index():
-    return 'Flask is running... Nothing else for you to do'
+    return 'Flask is running... Nothing else for you to do here'
 
 @app.route('/webhook', methods=['POST'])
 def telegram_webhook():
